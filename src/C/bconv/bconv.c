@@ -10,16 +10,16 @@
 char validOptionList[OPTION_PATTERN][10] = {"-b", "-o", "-d", "-h"};
 
 void checkArg(int, char *[]);
+bool isValidNumber(char, char *);
+bool isBinary(char *);
+bool isOctal(char *);
+bool isDecimal(char *);
+bool isHexadecimal(char *);
 
 void main(int argc, char *argv[])
 {
     // check main argument
     checkArg(argc, argv);
-
-    for (int i = 0; i < argc; i++)
-    {
-        printf("%s\n", argv[i]);
-    }
 }
 
 void checkArg(int argc, char *argv[])
@@ -32,9 +32,7 @@ void checkArg(int argc, char *argv[])
         exit(EX_USAGE);
     }
 
-    printf("%c\n", *argv[1]);
-    printf("%c\n", *(argv[1] + 1));
-    // option must start with '-', and end with 'b', 'o', 'd', or 'h'
+    // option must start with '-', end with 'b', 'o', 'd', or 'h'
     bool isValidOption = false;
     for (int i = 0; i < OPTION_PATTERN; i++)
     {
@@ -45,7 +43,95 @@ void checkArg(int argc, char *argv[])
     }
     if (!isValidOption)
     {
-        printf("ERROR: given parameter is invalid.\n");
+        printf("ERROR: given option is invalid.\n");
         exit(EX_USAGE);
     }
+
+    // NUMBER must be binary, octal, decimal or hexadecimal
+    if (!isValidNumber(*(argv[1] + 1), argv[2]))
+    {
+        printf("ERROR: given number is invalid.\n");
+        exit(EX_USAGE);
+    }
+}
+
+bool isValidNumber(char type, char *number)
+{
+    if (type == 'b')
+    {
+        return isBinary(number);
+    }
+    else if (type == 'o')
+    {
+        return isOctal(number);
+    }
+    else if (type == 'd')
+    {
+        return isDecimal(number);
+    }
+    else if (type == 'h')
+    {
+        return isHexadecimal(number);
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool isBinary(char *number)
+{
+    while (*number != '\0')
+    {
+        printf("%c\n", *number);
+        if (*number != '0' && *number != '1')
+        {
+            return false;
+        }
+        number++;
+    }
+
+    return true;
+}
+
+bool isOctal(char *number)
+{
+    while (*number != '\0')
+    {
+        if (*number < '0' || *number > '7')
+        {
+            return false;
+        }
+        number++;
+    }
+
+    return true;
+}
+
+bool isDecimal(char *number)
+{
+    while (*number != '\0')
+    {
+        if (*number < '0' || *number > '9')
+        {
+            return false;
+        }
+        number++;
+    }
+
+    return true;
+}
+
+bool isHexadecimal(char *number)
+{
+    while (*number != '\0')
+    {
+        if (!(*number >= '0' && *number <= '9') && !(*number >= 'A' && *number <= 'F'))
+        {
+            return false;
+        }
+        number++;
+    }
+
+    return true;
 }
