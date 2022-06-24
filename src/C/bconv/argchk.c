@@ -1,8 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <sysexits.h>
-#include <stdbool.h>
-#include <string.h>
 #include "argchk.h"
 
 char validOptionList[OPTION_PATTERN][10] = {"-b", "-o", "-d", "-h"};
