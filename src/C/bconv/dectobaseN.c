@@ -43,11 +43,17 @@ int getNumberOfDigits(int base, long decimal)
         numOfDigits++;
         temp /= base;
     }
-    return numOfDigits;
+    return numOfDigits == 0 ? 1 : numOfDigits;
 }
 
 void setDigits(int base, char *p, int decimal)
 {
+    if (decimal == 0)
+    {
+        *p = '0';
+        return;
+    }
+
     while (decimal > 0)
     {
         int remainder = decimal % base;
