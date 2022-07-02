@@ -19,9 +19,9 @@ void main(int argc, char *argv[])
     char *hexNumber = decimalToHex(decimalNumber);
 
     // print various base number
-    printf("binary: %s\n", binaryNumber);
-    printf("octal: %s\n", octalNumber);
-    printf("decimal: %ld\n", decimalNumber);
+    printf("     binary: %s\n", binaryNumber);
+    printf("      octal: %s\n", octalNumber);
+    printf("    decimal: %ld\n", decimalNumber);
     printf("hexadecimal: %s\n", hexNumber);
 
     free(binaryNumber);
